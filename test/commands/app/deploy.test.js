@@ -125,11 +125,11 @@ describe('run', () => {
   test('build & deploy actions with no actions folder ', async () => {
     command.argv = ['--skip-static']
     mockFS.existsSync.mockReturnValue(false)
-    await command.run()
+    await command.run() // fix here
     expect(command.error).toHaveBeenCalledTimes(0)
-    expect(mockScripts.deployActions).toHaveBeenCalledTimes(0)
+    expect(mockScripts.deployActions).toHaveBeenCalledTimes(1) // we can now deploy without having actions folder!
     expect(mockScripts.deployUI).toHaveBeenCalledTimes(0)
-    expect(mockScripts.buildActions).toHaveBeenCalledTimes(0)
+    expect(mockScripts.buildActions).toHaveBeenCalledTimes(1)
     expect(mockScripts.buildUI).toHaveBeenCalledTimes(0)
     expect(mockOpen).toHaveBeenCalledTimes(0)
   })

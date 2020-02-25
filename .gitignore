@@ -12,3 +12,7 @@ coverage
 
 oclif.manifest.json
 package-lock.json
+
+# env setup 
+.env
+.aio

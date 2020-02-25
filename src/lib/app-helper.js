@@ -44,6 +44,12 @@ async function runPackageScript (scriptName, dir, cmdArgs = []) {
   }
   debug(`running npm run-script ${scriptName} in dir: ${dir}`)
   const pkg = await fs.readJSON(path.join(dir, 'package.json'))
+
+  console.log('#################################')
+  console.log(pkg)
+  console.log('#################################')
+  // TODO Update package name here (do not touch original package if possible)
+
   if (pkg && pkg.scripts && pkg.scripts[scriptName]) {
     return execa('npm', ['run-script', scriptName].concat(cmdArgs), { cwd: dir, stdio: 'inherit' })
   } else {
