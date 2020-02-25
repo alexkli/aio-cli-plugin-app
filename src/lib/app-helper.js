@@ -45,10 +45,9 @@ async function runPackageScript (scriptName, dir, cmdArgs = []) {
   debug(`running npm run-script ${scriptName} in dir: ${dir}`)
   const pkg = await fs.readJSON(path.join(dir, 'package.json'))
 
-  console.log('#################################')
-  console.log(pkg)
-  console.log('#################################')
-  // TODO Update package name here (do not touch original package if possible)
+  if (pkg && pkg.name) {
+    pkg.name = removeScope(pkg.name)
+  }
 
   if (pkg && pkg.scripts && pkg.scripts[scriptName]) {
     return execa('npm', ['run-script', scriptName].concat(cmdArgs), { cwd: dir, stdio: 'inherit' })
@@ -69,6 +68,16 @@ function wrapError (err) {
   }
 
   return new Error(message)
+}
+
+/*
+
+*/
+function removeScope (str) {
+  if (!str) {
+    return str
+  }
+  return str.replace('@', '')
 }
 
 module.exports = {
